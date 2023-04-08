@@ -21,6 +21,11 @@ variable "vpc_cidr" {
   description    =    "This variable defines the CIDR range for the VPC"
 }
 
+variable "availability_zones" {
+  type           =    list(string)
+  description    =    "This variable defines a list of availability zones to deploy subnets into"
+}
+
 variable "private_subnets" {
   type           =    list(string)
   description    =    "This variable defines a list of private subnets with associated CIDR range"
@@ -41,3 +46,20 @@ variable "enable_vpn" {
   description    =    "This variable defines whether to deploy a VPN gateway in the VPC"
 }
 
+
+# ECS Configuration
+
+variable "desired_cpu" {
+  type           =    number
+  description    =    "This variable defines the desired CPU for the intiial task definition for the ECS cluster"
+}
+
+variable "desired_memory" {
+  type           =    number
+  description    =    "This variable defines the desired memory for the intiial task definition for the ECS cluster"
+}
+
+variable "host_port" {
+  type           =    number
+  description    =    "This variable defines the host port that the container will listen on"
+}

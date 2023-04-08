@@ -1,10 +1,11 @@
 module "vpc" {
+
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "benjamin-lloyd-personal-${var.environment}"
+  name = "ghost-app-vpc-${var.environment}"
   cidr = var.vpc_cidr
 
-  azs             = ["${var.region}-1a", "${var.region}-1b", "${var.region}-1c"]
+  azs             = var.availability_zones
   private_subnets = var.private_subnets
   public_subnets  = var.public_subnets
 

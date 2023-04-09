@@ -12,6 +12,9 @@ module "vpc" {
   enable_nat_gateway = var.enable_nat
   enable_vpn_gateway = var.enable_vpn
 
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+
   tags = local.account_tags
 
 }

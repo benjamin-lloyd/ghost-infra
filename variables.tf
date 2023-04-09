@@ -63,3 +63,17 @@ variable "host_port" {
   type           =    number
   description    =    "This variable defines the host port that the container will listen on"
 }
+
+
+#Budgets Configuration
+
+variable "budget_limit" {
+  type           =    number
+  description    =    "This variable defines the cost budget for AWS Budgets to send a notification on"
+}
+
+variable "cost_subscriber_emails" {
+  type           =    list(string)
+  description    =    "This variable defines the list of email notifications for AWS Budgets to send notifications to"
+}
+

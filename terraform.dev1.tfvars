@@ -12,9 +12,13 @@ enable_nat         =   true
 enable_vpn         =   false
 
 # ECS Configuration
-desired_cpu       =    4
-desired_memory    =    16
+desired_cpu       =    256
+desired_memory    =    512
 host_port         =    2368
+
+# Budgets Configuration
+budget_limit     =    200
+cost_subscriber_emails = ["blloyd67@gmail.com"]
 
 #Additional Tag Configuration
 

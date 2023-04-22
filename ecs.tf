@@ -54,11 +54,12 @@ resource "aws_security_group" "ghost_ecs_sg" {
 }
 
 resource "aws_ecs_task_definition" "ghost_task_def" {
-  family                   = "service"
+  family                   = "ghost_task_definition-${var.environment}"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.desired_cpu
   memory                   = var.desired_memory
+  task_role_arn            = aws_iam_role.ghost_ecs_execution_role.arn
   execution_role_arn       = aws_iam_role.ghost_ecs_execution_role.arn
   container_definitions    = jsonencode([
     {
@@ -79,7 +80,16 @@ resource "aws_ecs_task_definition" "ghost_task_def" {
           "sourceVolume": "ghost-efs-${var.environment}",
           "containerPath": "/var/lib/ghost"
         }
-      ]
+      ],
+      "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/ghost-app-${var.environment}",
+                    "awslogs-region": var.region,
+                    "awslogs-stream-prefix": "ecs"
+                }
+     }
     }
    ]
   )

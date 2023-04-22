@@ -67,7 +67,7 @@ resource "aws_ecs_task_definition" "ghost_task_def" {
       ],
       essential: true,
       image: "${aws_ecr_repository.ghost_app.repository_url}",
-      name: "ghost-app",
+      name: "ghost-app-${var.environment}",
       portMappings: [
         {
           "containerPort": 2368,
@@ -110,5 +110,11 @@ resource "aws_ecs_service" "ghost_service" {
     subnets         = module.vpc.private_subnets
     security_groups = [aws_security_group.ghost_ecs_sg.id]
   }
+
+   load_balancer {
+   target_group_arn = aws_lb_target_group.ghost_tg.arn
+   container_name   = "ghost-app-${var.environment}"
+   container_port   = 2368
+ }
 }
 

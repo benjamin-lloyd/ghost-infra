@@ -67,7 +67,8 @@ resource "aws_ecs_task_definition" "ghost_task_def" {
           {name: "NODE_ENV", value: "development"}
       ],
       essential: true,
-      image: "${aws_ecr_repository.ghost_app.repository_url}",
+#      image: "${aws_ecr_repository.ghost_app.repository_url}",
+      image: "ghost:0.11.3",
       name: "ghost-app-${var.environment}",
       portMappings: [
         {
@@ -101,6 +102,11 @@ resource "aws_ecs_task_definition" "ghost_task_def" {
       root_directory          = "/"
       transit_encryption      = "ENABLED"
       transit_encryption_port = 2999
+
+      authorization_config {
+        access_point_id = aws_efs_access_point.ghost_app_access_point.id
+        iam             = "ENABLED"
+      }
     }
   }
 }

@@ -47,3 +47,17 @@ resource "aws_efs_mount_target" "private_subnet_1c" {
   subnet_id      = module.vpc.private_subnets[2]
   security_groups = ["${aws_security_group.efs_sg.id}"]
 }
+
+resource "aws_efs_access_point" "ghost_app_access_point" {
+  file_system_id = aws_efs_file_system.ghost_efs.id
+
+  root_directory {
+    path = "/"
+
+    creation_info {
+      owner_gid   = 0
+      owner_uid   = 0
+      permissions = "755"
+    }
+  }
+}
